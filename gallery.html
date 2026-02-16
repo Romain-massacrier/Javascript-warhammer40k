@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Adeptus Mechanicus | Galerie</title>
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+
+<body>
+  <header class="site-header" role="banner">
+    <div class="logo" aria-label="Adeptus Mechanicus">Adeptus Mechanicus</div>
+
+    <nav class="main-nav" aria-label="Navigation principale">
+      <a href="index.html#forge">Forge</a>
+      <a href="index.html#requisitions">Réquisitions</a>
+      <a href="gallery.html">Galerie</a>
+      <a href="formulaire.html">Formulaire</a>
+
+      <div class="mech-dropdown" id="mechDropdown">
+        <button
+          class="mech-dropbtn"
+          id="mechDropBtn"
+          type="button"
+          aria-haspopup="true"
+          aria-expanded="false"
+        >
+          ☰ Cogitator
+        </button>
+
+        <div class="mech-dropcontent" id="mechDropContent" role="menu" aria-label="Menu Cogitator">
+          <div class="mech-dropsection">
+            <div class="mech-droptitle">Navigation</div>
+            <button class="mech-dropitem" type="button" data-link="index.html#forge">Accès Forge</button>
+            <button class="mech-dropitem" type="button" data-link="index.html#requisitions">Panneau Réquisitions</button>
+            <button class="mech-dropitem" type="button" data-link="gallery.html">Page Galerie</button>
+            <button class="mech-dropitem" type="button" data-link="formulaire.html">Page Formulaire</button>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main class="site-main" id="gallery-page">
+    <section class="hero mech-hero" aria-label="Galerie">
+      <h1>Galerie des Reliques</h1>
+      <p>Mode image uniquement, affichage mosaïque ou colonne.</p>
+    </section>
+
+    <section class="gallery-panel" id="gallery" aria-label="Galerie dynamique">
+      <div class="gallery-head">
+        <h2 class="inventory-title">Galerie des Reliques</h2>
+        <div class="gallery-controls-wrap">
+          <div class="gallery-controls" role="group" aria-label="Options d'affichage">
+            <button type="button" class="gallery-toggle is-active" id="view-mosaic">Mosaïque</button>
+            <button type="button" class="gallery-toggle" id="view-column">Colonne</button>
+          </div>
+
+          <form id="gallery-add-form" class="gallery-add-form" aria-label="Ajouter une image à la galerie">
+            <label for="gallery-image-file" class="gallery-add-label">Image locale</label>
+            <input id="gallery-image-file" type="file" accept="image/*" required>
+            <button type="submit" class="gallery-toggle">Ajouter image</button>
+          </form>
+        </div>
+      </div>
+
+      <p id="gallery-msg" class="gallery-msg" aria-live="polite"></p>
+
+      <div id="gallery-container" class="gallery-container mosaic-view" aria-live="polite">
+        <!-- Galerie générée par app.js -->
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <p>Forge Archive: Adeptus Mechanicus. Toute donnée est sacrée.</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

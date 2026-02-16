@@ -3,7 +3,6 @@
 // Thème: Imperium (Warhammer 40k)
 // ===============================
 
-
 // Données mock d'items (reliques) du Munitorum
 const itemsRPG = [
   {
@@ -51,44 +50,39 @@ const itemsRPG = [
     category: "Potion",
     stock: 12
   },
-  ]
-
+  {
+    id: 6,
+    name: "Sérum de régénération",
+    price: 60,
+    description: "Composé expérimental accélérant la reconstruction des tissus et la récupération.",
+    image: "assets/img/regeneration.jpeg",
+    category: "Potion",
+    stock: 6
+  },
+  {
+    id: 7,
+    name: "Crâne servo ancien",
+    price: 150,
+    description: "Relique mécanique contenant encore des fragments de mémoire d un ancien Tech-Priest.",
+    image: "assets/img/servoskull.jpeg",
+    category: "Artefact",
+    stock: 2
+  },
+  {
+    id: 8,
+    name: "Fragment STC endommagé",
+    price: 500,
+    description: "Artefact rare. Les données qu il contient pourraient changer le destin d un monde.",
+    image: "assets/img/stc.jpeg",
+    category: "Artefact",
+    stock: 1
+  }
+]
 
 // Ajout d'une relique
 function addItem(id, name, price, description, image, category, stock) {
   itemsRPG.push({ id, name, price, description, image, category, stock })
 }
-
-// Reliques additionnelles (mock)
-addItem(
-  6,
-  "Sérum de régénération",
-  1,
-  "Composé expérimental accélérant la reconstruction des tissus et la récupération.",
-  "assets/img/regeneration.jpeg",
-  "Potion",
-  147
-)
-
-addItem(
-  7,
-  "Crâne servo ancien",
-  -1,
-  "Relique mécanique contenant encore des fragments de mémoire d un ancien Tech-Priest.",
-  "assets/img/servoskull.jpeg",
-  "Artefact",
-  -1
-)
-
-addItem(
-  8,
-  "Fragment STC endommagé",
-  0,
-  "Artefact extrêmement rare. Les données qu il contient pourraient changer le destin d un monde.",
-  "assets/img/stc.jpeg",
-  "Artefact",
-  12940
-)
 
 // Crédits du requérant (mock)
 let playerGold = 800
@@ -97,6 +91,8 @@ let playerGold = 800
 const feedContainer = document.getElementById("feed-container")
 const goldAmountSpan = document.getElementById("gold-amount")
 const categoryFilter = document.getElementById("category-filter")
+
+// Dropdown
 const mechDropdown = document.getElementById("mechDropdown")
 const mechDropBtn = document.getElementById("mechDropBtn")
 const mechDropContent = document.getElementById("mechDropContent")
@@ -123,19 +119,16 @@ function scheduleDropdownClose() {
   }, 180)
 }
 
-
 // Mise à jour affichage des crédits
 function updateGoldDisplay() {
+  if (!goldAmountSpan) return
   goldAmountSpan.textContent = playerGold
 }
 
 // Helpers Imperium
 function formatPrice(item) {
-  // Prix -1: indisponible
   if (typeof item.price === "number" && item.price === -1) return "Indisponible"
-  // Prix 0: gratuit
   if (typeof item.price === "number" && item.price === 0) return "Réquisition libre"
-  // Prix normal
   if (typeof item.price === "number") return `${item.price} Crédits`
   return "Erreur de registre"
 }
@@ -151,7 +144,6 @@ function resolveImage(item) {
 }
 
 function isPurchasable(item) {
-  // Achetable si stock > 0 ET prix >= 0
   if (typeof item.stock !== "number" || item.stock <= 0) return false
   if (typeof item.price !== "number" || item.price < 0) return false
   return true
@@ -239,6 +231,8 @@ function handleRequisition(item, stockElement, buttonElement) {
 
 // Rendu des reliques
 function renderItems(filterCategory = "all") {
+  if (!feedContainer) return
+
   feedContainer.innerHTML = ""
 
   const filtered = itemsRPG.filter((item) => {
@@ -258,62 +252,68 @@ function renderItems(filterCategory = "all") {
 }
 
 // Écouteur sur le select de catégorie
-categoryFilter.addEventListener("change", (e) => {
-  renderItems(e.target.value)
-})
-
+if (categoryFilter) {
+  categoryFilter.addEventListener("change", (e) => {
+    renderItems(e.target.value)
+  })
+}
 
 // Initialisation
 updateGoldDisplay()
 renderItems()
 
 // ===============================
-// MENU COGITATOR: navigation + filtres
+// MENU COGITATOR: stable
+// Desktop: hover
+// Mobile: clic
 // ===============================
 
-if (mechDropdown && mechDropBtn && mechDropContent) {
-  mechDropBtn.addEventListener("click", () => {
-    const isOpen = mechDropdown.classList.contains("is-open")
-    setDropdownOpen(!isOpen)
-  })
-
-  mechDropdown.addEventListener("mouseenter", () => {
-    clearDropdownCloseTimer()
-    setDropdownOpen(true)
-  })
-
-  mechDropdown.addEventListener("mouseleave", () => {
-    scheduleDropdownClose()
-  })
-
-  mechDropContent.addEventListener("mouseenter", () => {
-    clearDropdownCloseTimer()
-    setDropdownOpen(true)
-  })
-
-  mechDropContent.addEventListener("mouseleave", () => {
-    scheduleDropdownClose()
-  })
-
-  mechDropdown.addEventListener("focusin", () => {
-    clearDropdownCloseTimer()
-    setDropdownOpen(true)
-  })
-
-  mechDropdown.addEventListener("focusout", () => {
-    scheduleDropdownClose()
-  })
-
-  document.addEventListener("click", (event) => {
-    if (!mechDropdown.contains(event.target)) {
-      setDropdownOpen(false)
-    }
-  })
+function isDesktopHover() {
+  return window.matchMedia("(hover: hover) and (pointer: fine)").matches
 }
 
+if (mechDropdown && mechDropBtn && mechDropContent) {
+  if (isDesktopHover()) {
+    // Sur desktop: hover uniquement
+    mechDropBtn.addEventListener("click", (e) => {
+      e.preventDefault()
+    })
 
-// Navigation (scroll vers section)
-if (mechDropContent) {
+    mechDropdown.addEventListener("mouseenter", () => {
+      clearDropdownCloseTimer()
+      setDropdownOpen(true)
+    })
+
+    mechDropdown.addEventListener("mouseleave", () => {
+      scheduleDropdownClose()
+    })
+
+    // Clavier
+    mechDropdown.addEventListener("focusin", () => {
+      clearDropdownCloseTimer()
+      setDropdownOpen(true)
+    })
+
+    mechDropdown.addEventListener("focusout", () => {
+      scheduleDropdownClose()
+    })
+  } else {
+    // Sur mobile: clic toggle
+    mechDropBtn.addEventListener("click", (e) => {
+      e.preventDefault()
+      e.stopPropagation()
+      const isOpen = mechDropdown.classList.contains("is-open")
+      setDropdownOpen(!isOpen)
+    })
+
+    document.addEventListener("click", (event) => {
+      if (!mechDropdown.contains(event.target)) {
+        setDropdownOpen(false)
+      }
+    })
+  }
+
+  // Navigation + filtres (commun)
   mechDropContent.querySelectorAll("[data-nav]").forEach((btn) => {
     btn.addEventListener("click", () => {
       const target = btn.getAttribute("data-nav")
@@ -323,17 +323,205 @@ if (mechDropContent) {
     })
   })
 
-  // Filtres rapides (sync select + render)
   mechDropContent.querySelectorAll("[data-filter]").forEach((btn) => {
     btn.addEventListener("click", () => {
       const value = btn.getAttribute("data-filter") || "all"
-      categoryFilter.value = value
+      if (categoryFilter) {
+        categoryFilter.value = value
+      }
       renderItems(value)
       setDropdownOpen(false)
 
-      // Bonus: descendre vers le catalogue
       const feed = document.getElementById("feed-container")
       if (feed) feed.scrollIntoView({ behavior: "smooth", block: "start" })
     })
   })
+
+  mechDropContent.querySelectorAll("[data-link]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const href = btn.getAttribute("data-link")
+      if (href) {
+        window.location.href = href
+      }
+      setDropdownOpen(false)
+    })
+  })
 }
+
+// ===============================
+// AJOUT D'ITEMS VIA FORMULAIRE
+// ===============================
+
+const addItemForm = document.getElementById("add-item-form")
+const addItemMsg = document.getElementById("add-item-msg")
+const galleryContainer = document.getElementById("gallery-container")
+const viewMosaicBtn = document.getElementById("view-mosaic")
+const viewColumnBtn = document.getElementById("view-column")
+const galleryAddForm = document.getElementById("gallery-add-form")
+const galleryImageFileInput = document.getElementById("gallery-image-file")
+const galleryMsg = document.getElementById("gallery-msg")
+
+const galleryState = {
+  viewMode: "mosaic",
+  images: itemsRPG.map((item) => resolveImage(item))
+}
+
+function nextItemId() {
+  const maxId = itemsRPG.reduce((max, it) => Math.max(max, Number(it.id) || 0), 0)
+  return maxId + 1
+}
+
+function createGalleryImage(imageSrc, index) {
+  const frame = document.createElement("div")
+  frame.className = "gallery-frame"
+
+  const image = document.createElement("img")
+  image.className = "gallery-image"
+  image.src = imageSrc
+  image.alt = `Relique ${index + 1}`
+
+  frame.appendChild(image)
+  return frame
+}
+
+function renderGallery() {
+  if (!galleryContainer) return
+
+  galleryContainer.innerHTML = ""
+  galleryContainer.classList.toggle("mosaic-view", galleryState.viewMode === "mosaic")
+  galleryContainer.classList.toggle("column-view", galleryState.viewMode === "column")
+
+  for (const [index, imageSrc] of galleryState.images.entries()) {
+    galleryContainer.appendChild(createGalleryImage(imageSrc, index))
+  }
+
+  if (galleryState.images.length === 0) {
+    const emptyState = document.createElement("p")
+    emptyState.className = "gallery-empty"
+    emptyState.textContent = "Aucune image dans la galerie."
+    galleryContainer.appendChild(emptyState)
+  }
+
+  if (viewMosaicBtn && viewColumnBtn) {
+    viewMosaicBtn.classList.toggle("is-active", galleryState.viewMode === "mosaic")
+    viewColumnBtn.classList.toggle("is-active", galleryState.viewMode === "column")
+  }
+}
+
+if (viewMosaicBtn && viewColumnBtn) {
+  viewMosaicBtn.addEventListener("click", () => {
+    galleryState.viewMode = "mosaic"
+    renderGallery()
+  })
+
+  viewColumnBtn.addEventListener("click", () => {
+    galleryState.viewMode = "column"
+    renderGallery()
+  })
+}
+
+if (galleryAddForm && galleryImageFileInput) {
+  galleryAddForm.addEventListener("submit", (event) => {
+    event.preventDefault()
+
+    const selectedFile = galleryImageFileInput.files && galleryImageFileInput.files[0]
+
+    if (!selectedFile) {
+      if (galleryMsg) galleryMsg.textContent = "Ajout refusé: sélectionnez une image locale."
+      return
+    }
+
+    if (!selectedFile.type || !selectedFile.type.startsWith("image/")) {
+      if (galleryMsg) galleryMsg.textContent = "Ajout refusé: fichier non image."
+      return
+    }
+
+    const localImageUrl = URL.createObjectURL(selectedFile)
+    galleryState.images.push(localImageUrl)
+    renderGallery()
+
+    if (galleryMsg) galleryMsg.textContent = "Image locale ajoutée dans la galerie."
+    galleryAddForm.reset()
+  })
+}
+
+if (addItemForm) {
+  const itemNameField = document.getElementById("item-name")
+  const itemDescField = document.getElementById("item-desc")
+  const itemCategoryField = document.getElementById("item-category")
+  const itemPriceField = document.getElementById("item-price")
+  const itemStockField = document.getElementById("item-stock")
+  const itemImageField = document.getElementById("item-image")
+
+  // Garde globale: si un champ obligatoire n'existe pas, on n'active pas le submit.
+  const hasRequiredFields =
+    itemNameField &&
+    itemDescField &&
+    itemCategoryField &&
+    itemPriceField &&
+    itemStockField
+
+  if (!hasRequiredFields) {
+    if (addItemMsg) {
+      addItemMsg.textContent = "Formulaire incomplet: vérifiez les champs requis."
+    }
+  }
+
+  addItemForm.addEventListener("submit", (e) => {
+    e.preventDefault()
+
+    if (!hasRequiredFields) {
+      return
+    }
+
+    const name = itemNameField.value.trim()
+    const description = itemDescField.value.trim()
+    const category = itemCategoryField.value
+    const price = Number(itemPriceField.value)
+    const stock = Number(itemStockField.value)
+    const imageUrl = itemImageField ? itemImageField.value.trim() : ""
+
+    const allowedCategories = ["Arme", "Armure", "Potion", "Artefact"]
+
+    if (!name || !description) {
+      if (addItemMsg) addItemMsg.textContent = "Décret refusé: champs incomplets."
+      return
+    }
+    if (!allowedCategories.includes(category)) {
+      if (addItemMsg) addItemMsg.textContent = "Décret refusé: catégorie invalide."
+      return
+    }
+    if (!Number.isFinite(price) || price < 0) {
+      if (addItemMsg) addItemMsg.textContent = "Décret refusé: prix invalide."
+      return
+    }
+    if (!Number.isFinite(stock) || stock < 0) {
+      if (addItemMsg) addItemMsg.textContent = "Décret refusé: stock invalide."
+      return
+    }
+
+    addItem(
+      nextItemId(),
+      name,
+      price,
+      description,
+      imageUrl || "assets/img/default.jpeg",
+      category,
+      stock
+    )
+
+    galleryState.images.push(imageUrl || "assets/img/default.jpeg")
+
+    const activeFilter = categoryFilter ? categoryFilter.value || "all" : "all"
+    renderItems(activeFilter)
+    renderGallery()
+
+    if (addItemMsg) addItemMsg.textContent = "Relique enregistrée dans le registre."
+    addItemForm.reset()
+
+    const feed = document.getElementById("feed-container")
+    if (feed) feed.scrollIntoView({ behavior: "smooth", block: "start" })
+  })
+}
+
+renderGallery()

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Adeptus Mechanicus | Formulaire</title>
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+
+<body>
+  <header class="site-header" role="banner">
+    <div class="logo" aria-label="Adeptus Mechanicus">Adeptus Mechanicus</div>
+
+    <nav class="main-nav" aria-label="Navigation principale">
+      <a href="index.html#forge">Forge</a>
+      <a href="index.html#requisitions">Réquisitions</a>
+      <a href="gallery.html">Galerie</a>
+      <a href="formulaire.html">Formulaire</a>
+
+      <div class="mech-dropdown" id="mechDropdown">
+        <button
+          class="mech-dropbtn"
+          id="mechDropBtn"
+          type="button"
+          aria-haspopup="true"
+          aria-expanded="false"
+        >
+          ☰ Cogitator
+        </button>
+
+        <div class="mech-dropcontent" id="mechDropContent" role="menu" aria-label="Menu Cogitator">
+          <div class="mech-dropsection">
+            <div class="mech-droptitle">Navigation</div>
+            <button class="mech-dropitem" type="button" data-link="index.html#forge">Accès Forge</button>
+            <button class="mech-dropitem" type="button" data-link="index.html#requisitions">Panneau Réquisitions</button>
+            <button class="mech-dropitem" type="button" data-link="gallery.html">Page Galerie</button>
+            <button class="mech-dropitem" type="button" data-link="formulaire.html">Page Formulaire</button>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main class="site-main" id="form-page">
+    <section class="hero mech-hero" aria-label="Formulaire dynamique">
+      <h1>Formulaire de Reliques</h1>
+      <p>Enregistre une nouvelle relique dans le registre dynamique.</p>
+    </section>
+
+    <section class="add-item-panel" aria-label="Enregistrement de relique">
+      <h2 class="inventory-title">Enregistrer une relique</h2>
+
+      <form id="add-item-form" class="add-item-form">
+        <div class="form-row">
+          <label for="item-name">Nom</label>
+          <input id="item-name" type="text" maxlength="40" required placeholder="Ex: Canon plasma sanctifié">
+        </div>
+
+        <div class="form-row">
+          <label for="item-desc">Description</label>
+          <textarea id="item-desc" rows="3" maxlength="160" required placeholder="Ex: Relique bénie, registre certifié."></textarea>
+        </div>
+
+        <div class="form-grid">
+          <div class="form-row">
+            <label for="item-category">Catégorie</label>
+            <select id="item-category" required>
+              <option value="Arme">Armements</option>
+              <option value="Armure">Plaques et carapaces</option>
+              <option value="Potion">Sérums et stimulants</option>
+              <option value="Artefact">Relics et données</option>
+            </select>
+          </div>
+
+          <div class="form-row">
+            <label for="item-price">Prix</label>
+            <input id="item-price" type="number" min="0" step="1" required placeholder="Ex: 120">
+          </div>
+
+          <div class="form-row">
+            <label for="item-stock">Stock</label>
+            <input id="item-stock" type="number" min="0" step="1" required placeholder="Ex: 3">
+          </div>
+
+          <div class="form-row">
+            <label for="item-image">Image (URL locale du projet)</label>
+            <input id="item-image" type="text" placeholder="assets/img/nom-image.jpeg (optionnel)">
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button class="item-buy-btn" type="submit">Enregistrer</button>
+          <p id="add-item-msg" class="form-msg" aria-live="polite"></p>
+        </div>
+      </form>
+    </section>
+
+    <section class="inventory-head" aria-label="Inventaire">
+      <h2 class="inventory-title">Prévisualisation des Reliques</h2>
+    </section>
+
+    <section id="feed-container" class="cards-grid" aria-label="Cartes de réquisition">
+      <!-- Cartes générées par app.js -->
+    </section>
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <p>Forge Archive: Adeptus Mechanicus. Toute donnée est sacrée.</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
