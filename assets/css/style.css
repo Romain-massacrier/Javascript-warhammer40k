@@ -1,0 +1,733 @@
+/* ===========================
+   IMPERIUM THEME (Warhammer 40k)
+   Garder les classes existantes pour ne pas casser app.js
+   =========================== */
+
+/* RESET SIMPLE */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root{
+  /* Palette Imperium */
+  --bg0: #07070a;
+  --bg1: #0b0c10;
+  --panel: #12131a;
+  --panel2: #161823;
+
+  --text: #f2efe6;
+  --muted: #b9b4a6;
+
+  --gold: #d7b35a;
+  --gold2: #f0d08a;
+  --brass: #8a6a2a;
+
+  --steel: #2b3146;
+  --steel2:#3a4463;
+
+  --seal: #9c2a2a;
+  --seal2:#d24a4a;
+
+  --glow: rgba(215,179,90,0.22);
+  --shadow: rgba(0,0,0,0.55);
+
+  --radius: 14px;
+  --radius2: 20px;
+}
+
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+  background:
+    radial-gradient(900px 420px at 10% 0%, rgba(215,179,90,0.10), transparent 55%),
+    radial-gradient(900px 520px at 90% 20%, rgba(156,42,42,0.08), transparent 55%),
+    linear-gradient(180deg, var(--bg0), var(--bg1));
+  color: var(--text);
+  line-height: 1.6;
+}
+
+/* Liens */
+a { color: var(--gold2); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* LAYOUT GLOBAL */
+.site-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.25rem;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.04), transparent 40%),
+    linear-gradient(90deg, rgba(156,42,42,0.16), transparent 35%),
+    linear-gradient(180deg, #10111a, #0d0e14);
+  border-bottom: 1px solid rgba(215,179,90,0.35);
+  box-shadow: 0 10px 28px var(--shadow);
+  position: sticky;
+  top: 0;
+  z-index: 5;
+}
+
+.logo {
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 0.95rem;
+  color: var(--gold2);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.logo::before{
+  content: "☠";
+  color: var(--gold);
+  text-shadow: 0 0 18px var(--glow);
+  font-size: 1.05rem;
+}
+
+.main-nav a {
+  color: var(--text);
+  margin-left: 1rem;
+  font-weight: 650;
+  font-size: 0.9rem;
+  opacity: 0.92;
+}
+.main-nav a:hover { color: var(--gold2); }
+
+.site-main {
+  max-width: 1200px;
+  margin: 1rem auto 2.25rem;
+  padding: 0 1rem;
+}
+
+/* HERO */
+.hero {
+  padding: 1.1rem 0 1.25rem;
+  border: 1px solid rgba(215,179,90,0.22);
+  border-radius: var(--radius);
+  background:
+    radial-gradient(900px 300px at 20% 0%, rgba(215,179,90,0.12), transparent 60%),
+    linear-gradient(180deg, rgba(255,255,255,0.03), transparent 45%),
+    linear-gradient(180deg, var(--panel), var(--panel2));
+  box-shadow: 0 16px 38px var(--shadow);
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::after{
+  content:"";
+  position:absolute;
+  inset:-2px;
+  background:
+    linear-gradient(135deg, rgba(215,179,90,0.12), transparent 35%),
+    linear-gradient(225deg, rgba(156,42,42,0.10), transparent 40%);
+  pointer-events:none;
+}
+
+.hero h1 {
+  font-size: 1.55rem;
+  margin: 0 1rem 0.35rem;
+  color: var(--gold2);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  text-shadow: 0 0 18px var(--glow);
+}
+
+.hero p {
+  margin: 0 1rem 0.95rem;
+  color: var(--muted);
+  max-width: 70ch;
+}
+
+/* TOOLBAR */
+.toolbar {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  padding: 0.85rem 0;
+  margin: 1rem 0 0.75rem;
+  border-top: 1px solid rgba(215,179,90,0.18);
+  border-bottom: 1px solid rgba(215,179,90,0.18);
+}
+
+.gold-display {
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  color: var(--gold2);
+  text-transform: uppercase;
+}
+
+#gold-amount{
+  padding: 0.12rem 0.45rem;
+  border-radius: 999px;
+  border: 1px solid rgba(215,179,90,0.35);
+  background: rgba(215,179,90,0.10);
+  box-shadow: 0 0 18px rgba(215,179,90,0.10);
+}
+
+.filters {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.filters label{
+  font-weight: 650;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+}
+
+.filters select {
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.04), transparent 50%),
+    linear-gradient(180deg, #12131a, #0f1016);
+  color: var(--text);
+  border: 1px solid rgba(215,179,90,0.28);
+  border-radius: 10px;
+  padding: 0.45rem 0.65rem;
+  outline: none;
+  box-shadow: 0 10px 22px rgba(0,0,0,0.35);
+}
+.filters select:focus{
+  border-color: rgba(240,208,138,0.65);
+  box-shadow: 0 0 0 3px rgba(215,179,90,0.18);
+}
+
+/* API STATUS */
+.api-status {
+  margin-top: 0.6rem;
+  font-size: 0.88rem;
+  color: var(--muted);
+  padding: 0.75rem 0.9rem;
+  border-radius: var(--radius);
+  background: rgba(18,19,26,0.65);
+  border: 1px solid rgba(58,68,99,0.35);
+}
+
+/* GRILLE DE CARTES */
+.cards-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+/* CARTE PRODUIT */
+.item-card {
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.03), transparent 45%),
+    linear-gradient(180deg, var(--panel), var(--panel2));
+  border: 1px solid rgba(215,179,90,0.22);
+  border-radius: var(--radius2);
+  padding: 0.85rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 18px 40px var(--shadow);
+  position: relative;
+  overflow: hidden;
+}
+
+.item-card::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(520px 240px at 20% 0%, rgba(215,179,90,0.10), transparent 55%),
+    radial-gradient(520px 240px at 100% 30%, rgba(156,42,42,0.08), transparent 60%);
+  pointer-events:none;
+}
+
+.item-card::after{
+  /* bandeau laiton discret */
+  content:"";
+  position:absolute;
+  left:0;
+  right:0;
+  top:0;
+  height: 6px;
+  background: linear-gradient(90deg, rgba(215,179,90,0.15), rgba(240,208,138,0.55), rgba(215,179,90,0.15));
+  opacity: 0.7;
+  pointer-events:none;
+}
+
+.item-image {
+  width: 100%;
+  height: 290px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 0.8rem;
+  border: 1px solid rgba(58,68,99,0.40);
+  box-shadow: 0 14px 26px rgba(0,0,0,0.55);
+  filter: contrast(1.05) saturate(0.95);
+}
+
+.item-title {
+  font-size: 1.05rem;
+  margin-bottom: 0.25rem;
+  color: var(--text);
+  font-weight: 900;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.item-category {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--gold2);
+  margin-bottom: 0.35rem;
+  opacity: 0.95;
+}
+
+.item-description {
+  font-size: 0.88rem;
+  color: var(--muted);
+  margin-bottom: 0.6rem;
+}
+
+.item-price {
+  font-weight: 900;
+  color: var(--gold2);
+  margin-bottom: 0.25rem;
+  letter-spacing: 0.03em;
+}
+
+.item-stock {
+  font-size: 0.86rem;
+  color: rgba(185,180,166,0.85);
+  margin-bottom: 0.85rem;
+}
+
+/* BOUTON ACHAT */
+.item-buy-btn {
+  align-self: stretch;
+  padding: 0.6rem 0.85rem;
+  border-radius: 12px;
+  border: 1px solid rgba(215,179,90,0.28);
+  background:
+    radial-gradient(600px 120px at 20% 0%, rgba(240,208,138,0.35), transparent 55%),
+    linear-gradient(180deg, rgba(255,255,255,0.06), transparent 45%),
+    linear-gradient(135deg, #1b1c25, #10111a);
+  color: var(--gold2);
+  font-weight: 950;
+  font-size: 0.9rem;
+  cursor: pointer;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  box-shadow: 0 16px 26px rgba(0,0,0,0.55);
+  transition: transform 0.08s ease, box-shadow 0.08s ease, filter 0.15s ease, opacity 0.15s ease;
+}
+
+.item-buy-btn:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 20px 34px rgba(0,0,0,0.62);
+  filter: brightness(1.05);
+}
+
+.item-buy-btn:active:not(:disabled) {
+  transform: translateY(1px);
+  box-shadow: 0 12px 22px rgba(0,0,0,0.50);
+}
+
+.item-buy-btn:disabled {
+  background: #2a2c35;
+  color: rgba(242,239,230,0.55);
+  cursor: not-allowed;
+  opacity: 0.7;
+  border-color: rgba(58,68,99,0.35);
+}
+
+/* MESSAGE VIDE */
+.empty-message {
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+/* FOOTER */
+.site-footer {
+  border-top: 1px solid rgba(215,179,90,0.18);
+  padding: 1rem;
+  text-align: center;
+  font-size: 0.82rem;
+  color: rgba(185,180,166,0.85);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.03), transparent 45%),
+    linear-gradient(180deg, #10111a, #0b0c10);
+}
+
+/* RESPONSIVE DESKTOP */
+@media (min-width: 640px) {
+  .item-card { width: calc(50% - 0.5rem); }
+}
+
+@media (min-width: 960px) {
+  .item-card { width: calc(33.333% - 0.7rem); }
+
+  .toolbar {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+/* EXTENSIONS IMPERIUM (pour le nouveau HTML) */
+.imperial-oath{
+  margin: 0.9rem 1rem 1rem;
+  padding: 0.85rem 0.9rem;
+  border-radius: 14px;
+  border: 1px solid rgba(215,179,90,0.22);
+  background: rgba(18,19,26,0.55);
+}
+.oath-title{
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #f0d08a;
+  margin-bottom: 0.35rem;
+  font-size: 0.85rem;
+}
+.oath-text{ color: rgba(185,180,166,0.95); }
+
+.command-panel{
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  padding: 0.9rem;
+  border-radius: 14px;
+  border: 1px solid rgba(215,179,90,0.18);
+  background: rgba(18,19,26,0.40);
+}
+.panel-subtext{
+  margin-top: 0.35rem;
+  color: rgba(185,180,166,0.85);
+  font-size: 0.9rem;
+}
+.panel-right .api-status{ margin-top: 0.65rem; }
+
+.decree-strip{
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.decree{
+  padding: 0.85rem 0.9rem;
+  border-radius: 14px;
+  border: 1px solid rgba(58,68,99,0.35);
+  background: rgba(18,19,26,0.50);
+}
+.decree-title{
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.10em;
+  color: #f0d08a;
+  font-size: 0.8rem;
+  margin-bottom: 0.35rem;
+}
+.decree-text{ color: rgba(185,180,166,0.92); }
+
+.inventory-head{ margin-top: 1.2rem; }
+.inventory-title{
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 950;
+  color: #f0d08a;
+}
+.inventory-subtitle{
+  color: rgba(185,180,166,0.92);
+  margin-top: 0.35rem;
+  max-width: 80ch;
+}
+
+@media (min-width: 960px){
+  .command-panel{
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+  .panel-left{ width: 45%; }
+  .panel-right{ width: 50%; }
+  .decree-strip{
+    flex-direction: row;
+  }
+  .decree{ width: calc(33.333% - 0.5rem); }
+}
+
+/* ===========================
+   ADEPTUS MECHANICUS EXTENSIONS
+   A coller a la fin de style.css
+   =========================== */
+
+.mech-hero{
+  border-color: rgba(210,74,74,0.30);
+  background:
+    radial-gradient(900px 320px at 15% 0%, rgba(210,74,74,0.14), transparent 60%),
+    radial-gradient(700px 260px at 90% 25%, rgba(215,179,90,0.10), transparent 62%),
+    linear-gradient(180deg, rgba(255,255,255,0.03), transparent 45%),
+    linear-gradient(180deg, #12131a, #161823);
+}
+
+.mech-sigils{
+  margin: 0.9rem 1rem 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+}
+
+.sigil{
+  font-size: 0.78rem;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  padding: 0.35rem 0.55rem;
+  border-radius: 999px;
+  border: 1px solid rgba(210,74,74,0.28);
+  background: rgba(18,19,26,0.55);
+  color: rgba(242,239,230,0.90);
+}
+
+.mech-panel{
+  border: 1px solid rgba(210,74,74,0.20);
+  background:
+    radial-gradient(800px 240px at 20% 0%, rgba(210,74,74,0.10), transparent 55%),
+    linear-gradient(180deg, rgba(255,255,255,0.03), transparent 45%),
+    rgba(18,19,26,0.42);
+}
+
+.mech-litany{
+  margin-top: 0.85rem;
+  padding: 0.85rem 0.9rem;
+  border-radius: 14px;
+  border: 1px solid rgba(215,179,90,0.18);
+  background: rgba(18,19,26,0.50);
+}
+
+.litany-title{
+  font-weight: 950;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #f0d08a;
+  font-size: 0.8rem;
+  margin-bottom: 0.35rem;
+}
+
+.litany-text{
+  color: rgba(185,180,166,0.92);
+}
+
+.mech-vox{
+  border-color: rgba(210,74,74,0.22);
+  background: rgba(18,19,26,0.62);
+}
+
+.mech-warnings{
+  margin-top: 0.75rem;
+  padding: 0.85rem 0.9rem;
+  border-radius: 14px;
+  border: 1px solid rgba(210,74,74,0.28);
+  background:
+    radial-gradient(700px 200px at 30% 0%, rgba(210,74,74,0.14), transparent 60%),
+    rgba(18,19,26,0.55);
+}
+
+.warn-title{
+  font-weight: 950;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: rgba(210,74,74,0.95);
+  font-size: 0.8rem;
+  margin-bottom: 0.35rem;
+}
+
+.warn-text{
+  color: rgba(242,239,230,0.86);
+}
+
+.data-strip{
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.data-chip{
+  padding: 0.85rem 0.9rem;
+  border-radius: 14px;
+  border: 1px solid rgba(58,68,99,0.35);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.03), transparent 45%),
+    rgba(18,19,26,0.52);
+  position: relative;
+  overflow: hidden;
+}
+
+.data-chip::after{
+  content:"";
+  position:absolute;
+  left:0;
+  right:0;
+  top:0;
+  height: 5px;
+  background: linear-gradient(90deg, rgba(210,74,74,0.20), rgba(240,208,138,0.45), rgba(210,74,74,0.20));
+  opacity: 0.75;
+}
+
+.chip-title{
+  font-weight: 950;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: #f0d08a;
+  font-size: 0.78rem;
+  margin-bottom: 0.35rem;
+}
+
+.chip-text{
+  color: rgba(185,180,166,0.92);
+}
+
+.inventory-head{ margin-top: 1.2rem; }
+
+@media (min-width: 960px){
+  .data-strip{
+    flex-direction: row;
+  }
+  .data-chip{
+    width: calc(33.333% - 0.5rem);
+  }
+}
+
+/* ===========================
+   ADEPTUS MECHANICUS TERMINAL MODE
+   =========================== */
+
+body{
+  font-family: "Courier New", monospace;
+  letter-spacing: 0.02em;
+}
+
+/* Effet écran machine */
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  background:
+    repeating-linear-gradient(
+      0deg,
+      rgba(255,255,255,0.03) 0px,
+      rgba(255,255,255,0.03) 1px,
+      transparent 1px,
+      transparent 3px
+    );
+  pointer-events:none;
+  z-index:9999;
+  opacity:0.35;
+}
+
+/* Logo style cogitateur */
+.logo{
+  font-family: monospace;
+  color:#d24a4a;
+  text-shadow:
+    0 0 6px rgba(210,74,74,0.8),
+    0 0 18px rgba(210,74,74,0.4);
+}
+
+/* HERO = écran terminal */
+.mech-hero{
+  background:
+    radial-gradient(circle at 20% 0%, rgba(210,74,74,0.15), transparent 60%),
+    linear-gradient(180deg,#0a0a0e,#111217);
+  border:1px solid rgba(210,74,74,0.35);
+}
+
+.mech-hero h1{
+  color:#ff6b6b;
+  text-shadow:0 0 10px rgba(255,80,80,0.7);
+}
+
+/* Sigils = tags système */
+.sigil{
+  background:#0f1016;
+  border:1px solid rgba(210,74,74,0.4);
+  color:#ff9a9a;
+  box-shadow:0 0 12px rgba(210,74,74,0.25) inset;
+}
+
+/* Panneau principal = console */
+.mech-panel{
+  background:
+    linear-gradient(180deg,#0d0e14,#0b0c10);
+  border:1px solid rgba(210,74,74,0.25);
+}
+
+/* Litanie = bloc code sacré */
+.mech-litany{
+  font-size:0.85rem;
+  background:#0c0d12;
+  border:1px solid rgba(215,179,90,0.25);
+}
+
+/* API status = terminal */
+.mech-vox{
+  font-size:0.85rem;
+  font-family: monospace;
+  color:#ffb86c;
+}
+
+/* Warning */
+.mech-warnings{
+  background:#1a0f12;
+  border:1px solid rgba(210,74,74,0.4);
+}
+
+.warn-title{
+  color:#ff4d4d;
+}
+
+/* Chips data */
+.data-chip{
+  background:#0c0d12;
+  border:1px solid rgba(210,74,74,0.3);
+}
+
+.chip-title{
+  color:#ff9a9a;
+}
+
+/* Cartes produits = modules mécaniques */
+.item-card{
+  background:
+    linear-gradient(180deg,#0e0f15,#13141c);
+  border:1px solid rgba(210,74,74,0.2);
+}
+
+/* Bouton réquisition = bouton machine */
+.item-buy-btn{
+  background:
+    linear-gradient(135deg,#1a1b22,#101116);
+  border:1px solid rgba(210,74,74,0.5);
+  color:#ff9a9a;
+  text-shadow:0 0 6px rgba(210,74,74,0.5);
+}
+
+.item-buy-btn:hover{
+  background:
+    linear-gradient(135deg,#2a1116,#1a0c10);
+  box-shadow:
+    0 0 10px rgba(210,74,74,0.5),
+    0 0 30px rgba(210,74,74,0.2);
+}
+
+/* Titres style dataslate */
+.inventory-title{
+  font-family: monospace;
+  color:#ff6b6b;
+  text-shadow:0 0 8px rgba(255,80,80,0.6);
+}

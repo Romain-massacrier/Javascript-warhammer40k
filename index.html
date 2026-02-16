@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Adeptus Mechanicus | Forge Terminal</title>
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+
+<body>
+  <!-- TERMINAL DE FORGE -->
+  <header class="site-header" role="banner">
+    <div class="logo" aria-label="Adeptus Mechanicus">Adeptus Mechanicus</div>
+
+    <nav class="main-nav" aria-label="Navigation principale">
+      <a href="#forge">Forge</a>
+      <a href="#requisitions">Réquisitions</a>
+      <a href="#vox">Vox</a>
+    </nav>
+  </header>
+
+  <main class="site-main" id="requisitions">
+    <!-- PROCLAMATION MECHANICUS -->
+    <section class="hero mech-hero" id="forge" aria-label="Proclamation de forge">
+      <h1>Terminal de Forge</h1>
+      <p>
+        Accès autorisé aux registres de réquisition. Toute anomalie sera consignée.
+        Louée soit la Machine. Bénie soit la donnée.
+      </p>
+
+      <div class="mech-sigils" aria-label="Sigils de forge">
+        <span class="sigil">SIGIL: OMNISSIAH</span>
+        <span class="sigil">NOOSPHERE: ACTIVE</span>
+        <span class="sigil">COGITATOR: STABLE</span>
+      </div>
+    </section>
+
+    <!-- PANNEAU DE COMMANDE -->
+    <section class="command-panel mech-panel" aria-label="Panneau de commande">
+      <div class="panel-left">
+        <div class="gold-display" aria-label="Crédits disponibles">
+          Crédits de Forge : <span id="gold-amount">0</span>
+        </div>
+
+        <p class="panel-subtext">
+          Log: protocole de bénédiction appliqué. Audit: en attente. Pureté: nominale.
+        </p>
+
+        <div class="mech-litany" aria-label="Litanie">
+          <p class="litany-title">Litanie d initialisation</p>
+          <p class="litany-text">
+            Esprit Machine, accepte ces requêtes. Que les circuits soient calmes.
+            Que les index soient exacts. Que le stock soit vérité.
+          </p>
+        </div>
+      </div>
+
+      <div class="panel-right">
+        <div class="filters" aria-label="Filtre de registre">
+          <label for="category-filter">Filtre de registre</label>
+          <select id="category-filter">
+            <option value="all">Tous les schémas</option>
+
+            <!-- IMPORTANT: value doit rester Arme/Armure/Potion/Artefact pour matcher ton JS -->
+            <option value="Arme">Armements</option>
+            <option value="Armure">Plaques et carapaces</option>
+            <option value="Potion">Sérums et stimulants</option>
+            <option value="Artefact">Relics et données</option>
+          </select>
+        </div>
+
+    
+        <div class="mech-warnings" aria-label="Avertissements">
+          <p class="warn-title">Avertissement</p>
+          <p class="warn-text">
+            Toute relique non certifiée sera isolée. Toute donnée xenos sera scellée.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- BARRE DE DONNEES -->
+    <section class="data-strip" aria-label="Bande de données">
+      <div class="data-chip">
+        <p class="chip-title">NODE 01</p>
+        <p class="chip-text">Inventaire en ligne</p>
+      </div>
+      <div class="data-chip">
+        <p class="chip-title">NODE 02</p>
+        <p class="chip-text">Réquisitions actives</p>
+      </div>
+      <div class="data-chip">
+        <p class="chip-title">NODE 03</p>
+        <p class="chip-text">Sceaux de contrôle</p>
+      </div>
+    </section>
+
+    <!-- ENTETE INVENTAIRE -->
+    <section class="inventory-head" aria-label="Inventaire">
+      <h2 class="inventory-title">Catalogue de Forge</h2>
+      <p class="inventory-subtitle">
+        Sélectionnez un registre, puis lancez la réquisition. Les entrées apparaissent ci dessous.
+      </p>
+    </section>
+
+    <!-- IMPORTANT: id + class doivent rester identiques pour ton JS -->
+    <section id="feed-container" class="cards-grid" aria-label="Cartes de réquisition">
+      <!-- Cartes générées par app.js -->
+    </section>
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <p>Forge Archive: Adeptus Mechanicus. Toute donnée est sacrée.</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
