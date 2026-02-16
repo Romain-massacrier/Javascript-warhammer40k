@@ -69,6 +69,28 @@ Le projet s’inspire de l’Adeptus Mechanicus, faction emblématique de Warham
 
 Chaque objet de la boutique représente une relique, un équipement militaire ou un artefact technologique récupéré sur un champ de bataille.
 
+## Convention de commits
+
+Exemples utilisés dans ce projet :
+
+```
+init: création du projet
+feat: ajout des objets warhammer
+feat: ajout système d'achat
+style: thème adeptus mechanicus
+fix: correction bug stock
+refactor: amélioration du rendu
+docs: ajout README
+```
+
+## Améliorations possibles
+
+* Sauvegarde des crédits en localStorage
+* Système de rareté des objets
+* Génération aléatoire de loot
+* Inventaire joueur
+* Sons d’interface immersifs
+* Animations visuelles
 
 ## Auteur
 
@@ -79,4 +101,3 @@ Campus Numérique in the Alps
 ## Statut du projet
 
 En développement actif
-

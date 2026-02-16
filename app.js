@@ -97,6 +97,31 @@ let playerGold = 800
 const feedContainer = document.getElementById("feed-container")
 const goldAmountSpan = document.getElementById("gold-amount")
 const categoryFilter = document.getElementById("category-filter")
+const mechDropdown = document.getElementById("mechDropdown")
+const mechDropBtn = document.getElementById("mechDropBtn")
+const mechDropContent = document.getElementById("mechDropContent")
+
+let closeDropdownTimer = null
+
+function setDropdownOpen(isOpen) {
+  if (!mechDropdown || !mechDropBtn) return
+  mechDropdown.classList.toggle("is-open", isOpen)
+  mechDropBtn.setAttribute("aria-expanded", String(isOpen))
+}
+
+function clearDropdownCloseTimer() {
+  if (closeDropdownTimer) {
+    clearTimeout(closeDropdownTimer)
+    closeDropdownTimer = null
+  }
+}
+
+function scheduleDropdownClose() {
+  clearDropdownCloseTimer()
+  closeDropdownTimer = setTimeout(() => {
+    setDropdownOpen(false)
+  }, 180)
+}
 
 
 // Mise à jour affichage des crédits
@@ -242,3 +267,73 @@ categoryFilter.addEventListener("change", (e) => {
 updateGoldDisplay()
 renderItems()
 
+// ===============================
+// MENU COGITATOR: navigation + filtres
+// ===============================
+
+if (mechDropdown && mechDropBtn && mechDropContent) {
+  mechDropBtn.addEventListener("click", () => {
+    const isOpen = mechDropdown.classList.contains("is-open")
+    setDropdownOpen(!isOpen)
+  })
+
+  mechDropdown.addEventListener("mouseenter", () => {
+    clearDropdownCloseTimer()
+    setDropdownOpen(true)
+  })
+
+  mechDropdown.addEventListener("mouseleave", () => {
+    scheduleDropdownClose()
+  })
+
+  mechDropContent.addEventListener("mouseenter", () => {
+    clearDropdownCloseTimer()
+    setDropdownOpen(true)
+  })
+
+  mechDropContent.addEventListener("mouseleave", () => {
+    scheduleDropdownClose()
+  })
+
+  mechDropdown.addEventListener("focusin", () => {
+    clearDropdownCloseTimer()
+    setDropdownOpen(true)
+  })
+
+  mechDropdown.addEventListener("focusout", () => {
+    scheduleDropdownClose()
+  })
+
+  document.addEventListener("click", (event) => {
+    if (!mechDropdown.contains(event.target)) {
+      setDropdownOpen(false)
+    }
+  })
+}
+
+
+// Navigation (scroll vers section)
+if (mechDropContent) {
+  mechDropContent.querySelectorAll("[data-nav]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const target = btn.getAttribute("data-nav")
+      const el = document.querySelector(target)
+      if (el) el.scrollIntoView({ behavior: "smooth", block: "start" })
+      setDropdownOpen(false)
+    })
+  })
+
+  // Filtres rapides (sync select + render)
+  mechDropContent.querySelectorAll("[data-filter]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const value = btn.getAttribute("data-filter") || "all"
+      categoryFilter.value = value
+      renderItems(value)
+      setDropdownOpen(false)
+
+      // Bonus: descendre vers le catalogue
+      const feed = document.getElementById("feed-container")
+      if (feed) feed.scrollIntoView({ behavior: "smooth", block: "start" })
+    })
+  })
+}
